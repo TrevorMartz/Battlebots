@@ -79,12 +79,7 @@ public class Driver implements DistanceListener, LightListener, TouchListener, T
 			currentState = MotionMode.SEARCHING;
 //			currentState = MotionMode.EVADING_LINE;
 //			groundInteraction.evadeLine();
-			groundInteraction.startSearch();
-			try
-			{
-				Thread.sleep(500);
-			}
-			catch(Exception e){}
+//			groundInteraction.startSearch();
 			groundInteraction.search();
 			new Timer(this, 500);
 		}

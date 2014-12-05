@@ -159,9 +159,9 @@ public class GroundInteraction implements TimerListener
 		stop();
 		synchronized (movementFacilitator)
 		{
-			path.add(new Instruction(Direction.BACKWARD, 100, 1000000));
-			path.add(new Instruction(Direction.RIGHT, 200, 1000000));
-			path.add(new Instruction(Direction.FORWARD, 500, 1000000));
+			path.add(new Instruction(Direction.BACKWARD, 200, 1000000));
+//			path.add(new Instruction(Direction.RIGHT, 200, 1000000));
+//			path.add(new Instruction(Direction.FORWARD, 500, 1000000));
 			movementFacilitator.start();
 			try
 			{
