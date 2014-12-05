@@ -91,11 +91,11 @@ public class GroundInteraction implements TimerListener
 
 	}
 
-	public void rotate()
-	{
-		left.forward();
-		right.backward();
-	}
+//	public void rotate()
+//	{
+//		left.forward();
+//		right.backward();
+//	}
 
 	public synchronized void stop()
 	{
@@ -134,25 +134,24 @@ public class GroundInteraction implements TimerListener
 	{
 		stop();
 //		path.add(new Instruction(Direction.BACKWARD, 100, 2000));
-		path.add(new Instruction(Direction.RIGHT, 1000, 1000));
 		path.add(new Instruction(Direction.LEFT, 1000, 1000));
 		path.add(new Instruction(Direction.FORWARD, 100, 1000));
 		movementFacilitator.start();
 	}
 	
-	public void startSearch()
-	{
-		stop();
-		path.add(new Instruction(Direction.BACKWARD, 600, 2000));
-		movementFacilitator.start();
-	}
+//	public void startSearch()
+//	{
+//		stop();
+//		path.add(new Instruction(Direction.BACKWARD, 600, 2000));
+//		movementFacilitator.start();
+//	}
 
-	public void startRetreat()
-	{
-		stop();
-		path.add(new Instruction(Direction.BACKWARD, 2000, 1000));
-		movementFacilitator.start();
-	}
+//	public void startRetreat()
+//	{
+//		stop();
+//		path.add(new Instruction(Direction.BACKWARD, 2000, 1000));
+//		movementFacilitator.start();
+//	}
 
 	public void evadeLine()
 	{
@@ -174,13 +173,13 @@ public class GroundInteraction implements TimerListener
 		}
 	}
 
-	public void evadePlan2()
-	{
-		stop();
-		path.add(new Instruction(Direction.BACKWARD, 300, 100000));
-		path.add(new Instruction(Direction.LEFT, 300, 1000000));
-		movementFacilitator.start();
-	}
+//	public void evadePlan2()
+//	{
+//		stop();
+//		path.add(new Instruction(Direction.BACKWARD, 300, 100000));
+//		path.add(new Instruction(Direction.LEFT, 300, 1000000));
+//		movementFacilitator.start();
+//	}
 
 	public void moveForward()
 	{
@@ -190,21 +189,21 @@ public class GroundInteraction implements TimerListener
 		movementFacilitator.start();
 	}
 
-	public void searchSweeping()
-	{
-		stop();
-		path.add(new Instruction(Direction.RIGHT, 700, 500));
-		path.add(new Instruction(Direction.LEFT, 900, 500));
-		movementFacilitator.start();
-	}
+//	public void searchSweeping()
+//	{
+//		stop();
+//		path.add(new Instruction(Direction.RIGHT, 700, 500));
+//		path.add(new Instruction(Direction.LEFT, 900, 500));
+//		movementFacilitator.start();
+//	}
 
-	public void reverseAndSearch()
-	{
-		stop();
-		path.add(new Instruction(Direction.BACKWARD, 1000, 100000));
-		path.add(new Instruction(Direction.RIGHT, 2000, 500));
-		movementFacilitator.start();
-	}
+//	public void reverseAndSearch()
+//	{
+//		stop();
+//		path.add(new Instruction(Direction.BACKWARD, 1000, 100000));
+//		path.add(new Instruction(Direction.RIGHT, 2000, 500));
+//		movementFacilitator.start();
+//	}
 
 	private void move()
 	{
