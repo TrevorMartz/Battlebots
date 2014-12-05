@@ -134,7 +134,8 @@ public class GroundInteraction implements TimerListener
 	{
 		stop();
 //		path.add(new Instruction(Direction.BACKWARD, 100, 2000));
-		path.add(new Instruction(Direction.RIGHT, 200, 1000));
+		path.add(new Instruction(Direction.RIGHT, 500, 1000));
+		path.add(new Instruction(Direction.LEFT, 500, 1000));
 		path.add(new Instruction(Direction.FORWARD, 100, 1000));
 		movementFacilitator.start();
 	}
@@ -142,7 +143,7 @@ public class GroundInteraction implements TimerListener
 	public void startSearch()
 	{
 		stop();
-		path.add(new Instruction(Direction.BACKWARD, 100, 2000));
+		path.add(new Instruction(Direction.BACKWARD, 300, 2000));
 		movementFacilitator.start();
 	}
 
