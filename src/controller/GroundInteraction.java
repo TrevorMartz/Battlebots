@@ -173,26 +173,26 @@ public class GroundInteraction
 				case BACKWARD:
 					right.setSpeed(inst.speed);
 					left.setSpeed(inst.speed);
-					right.backward();
-					left.backward();
+					right.forward();
+					left.forward();
 					break;
 				case FORWARD:
 					right.setSpeed(inst.speed);
 					left.setSpeed(inst.speed);
-					right.forward();
-					left.forward();
+					right.backward();
+					left.backward();
 					break;
 				case LEFT:
 					right.setSpeed(inst.speed);
 					left.setSpeed(inst.speed);
-					left.forward();
-					right.backward();
+					left.backward();
+					right.forward();
 					break;
 				case RIGHT:
 					right.setSpeed(inst.speed);
 					left.setSpeed(inst.speed);
-					left.backward();
-					right.forward();
+					left.forward();
+					right.backward();
 					break;
 				default:
 					break;
