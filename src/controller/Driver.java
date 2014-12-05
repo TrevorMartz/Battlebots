@@ -63,7 +63,8 @@ public class Driver implements DistanceListener, LightListener, TouchListener, T
 	@Override
 	public void thresholdPassed()
 	{
-		// TODO Auto-generated method stub
+		currentState = MotionMode.EVADING_LINE;
+		groundInteraction.evadeLine();
 	}
 
 	@Override
