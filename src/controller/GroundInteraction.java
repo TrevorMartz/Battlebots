@@ -138,8 +138,8 @@ public class GroundInteraction
 	public void moveForward()
 	{
 		stop();
-		RConsole.println("\npath is null? " + (path == null));
-		path.add(new Instruction(Direction.FORWARD, 3000, 400));
+//		RConsole.println("\npath is null? " + (path == null));
+		path.add(new Instruction(Direction.FORWARD, 3000, 800));
 		movementFacilitator.start();
 	}
 
