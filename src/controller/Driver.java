@@ -65,7 +65,6 @@ public class Driver implements DistanceListener, LightListener, TouchListener, T
 	@Override
 	public void lineDetected()
 	{
-		RConsole.print("Line detected");
 		currentState = MotionMode.EVADING_LINE;
 		groundInteraction.evadeLine();
 	}
@@ -73,41 +72,37 @@ public class Driver implements DistanceListener, LightListener, TouchListener, T
 	@Override
 	public void lineLost()
 	{
-		// TODO Auto-generated method stub
 		if (currentState == MotionMode.EVADING_LINE)
 		{
 			currentState = MotionMode.SEARCHING;
-//			currentState = MotionMode.EVADING_LINE;
-//			groundInteraction.evadeLine();
-//			groundInteraction.startSearch();
 			groundInteraction.search();
-			new Timer(this, 500);
 		}
 	}
 
 	@Override
 	public void objectDetected()
 	{
-		// TODO Auto-generated method stub
-		if (currentState != MotionMode.EVADING_LINE)
+		if (currentState == MotionMode.EVADING_LINE)
 		{
-//			Sound.beepSequenceUp();
+			currentState = MotionMode.RETREATING;
+			groundInteraction.retreat();
+		}
+		else
+		{
 			currentState = MotionMode.PUSHING;
-			groundInteraction.moveForward();
 		}
 	}
 
 	@Override
 	public void objectLost()
 	{
-		
-		// TODO search again
-
+		currentState = MotionMode.SEARCHING;
+		groundInteraction.search();
 	}
 
 	@Override
 	public void onTimerFinish()
 	{
-		currentState = MotionMode.SEARCHING;
+//		currentState = MotionMode.SEARCHING;
 	}
 }

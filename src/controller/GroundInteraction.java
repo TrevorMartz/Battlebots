@@ -5,10 +5,8 @@ import interfaces.TimerListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import sensors.Timer;
 import lejos.nxt.Motor;
 import lejos.nxt.NXTRegulatedMotor;
-import lejos.nxt.comm.RConsole;
 
 public class GroundInteraction implements TimerListener
 {
@@ -77,25 +75,19 @@ public class GroundInteraction implements TimerListener
 		left = Motor.getInstance(1);
 		right = Motor.getInstance(2);
 
-		// left.setSpeed(1000000);
-		// right.setSpeed(1000000);
-
 		movementFacilitator = new Thread(new Runnable()
 		{
 			@Override
 			public void run()
 			{
-				move();
+				while(!Thread.interrupted())
+				{
+					move();
+				}//this might cause problems
 			}
 		});
 
 	}
-
-//	public void rotate()
-//	{
-//		left.forward();
-//		right.backward();
-//	}
 
 	public synchronized void stop()
 	{
@@ -130,28 +122,26 @@ public class GroundInteraction implements TimerListener
 		path.clear();
 	}
 
+	public void retreat()
+	{
+		stop();
+		path.add(new Instruction(Direction.BACKWARD, 3000, (int) left.getMaxSpeed()));
+		movementFacilitator.start();
+	}
+	
+	public void push()
+	{
+		stop();
+		path.add(new Instruction(Direction.FORWARD, 5000, (int) left.getMaxSpeed()));
+	}
+	
 	public void search()
 	{
 		stop();
-//		path.add(new Instruction(Direction.BACKWARD, 100, 2000));
 		path.add(new Instruction(Direction.LEFT, 1000, 1000));
 		path.add(new Instruction(Direction.FORWARD, 100, 1000));
 		movementFacilitator.start();
 	}
-	
-//	public void startSearch()
-//	{
-//		stop();
-//		path.add(new Instruction(Direction.BACKWARD, 600, 2000));
-//		movementFacilitator.start();
-//	}
-
-//	public void startRetreat()
-//	{
-//		stop();
-//		path.add(new Instruction(Direction.BACKWARD, 2000, 1000));
-//		movementFacilitator.start();
-//	}
 
 	public void evadeLine()
 	{
@@ -159,8 +149,6 @@ public class GroundInteraction implements TimerListener
 		synchronized (movementFacilitator)
 		{
 			path.add(new Instruction(Direction.BACKWARD, 200, 1000000));
-//			path.add(new Instruction(Direction.RIGHT, 200, 1000000));
-//			path.add(new Instruction(Direction.FORWARD, 500, 1000000));
 			movementFacilitator.start();
 			try
 			{
@@ -173,37 +161,12 @@ public class GroundInteraction implements TimerListener
 		}
 	}
 
-//	public void evadePlan2()
-//	{
-//		stop();
-//		path.add(new Instruction(Direction.BACKWARD, 300, 100000));
-//		path.add(new Instruction(Direction.LEFT, 300, 1000000));
-//		movementFacilitator.start();
-//	}
-
 	public void moveForward()
 	{
 		stop();
-//		RConsole.println("\npath is null? " + (path == null));
 		path.add(new Instruction(Direction.FORWARD, 3000, 800));
 		movementFacilitator.start();
 	}
-
-//	public void searchSweeping()
-//	{
-//		stop();
-//		path.add(new Instruction(Direction.RIGHT, 700, 500));
-//		path.add(new Instruction(Direction.LEFT, 900, 500));
-//		movementFacilitator.start();
-//	}
-
-//	public void reverseAndSearch()
-//	{
-//		stop();
-//		path.add(new Instruction(Direction.BACKWARD, 1000, 100000));
-//		path.add(new Instruction(Direction.RIGHT, 2000, 500));
-//		movementFacilitator.start();
-//	}
 
 	private void move()
 	{
