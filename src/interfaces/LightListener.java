@@ -2,7 +2,7 @@ package interfaces;
 
 public interface LightListener {
 	
-	public void thresholdPassed();
-	public void thresholdUnderpassed();
+	public void lineDetected();
+	public void lineLost();
 
 }

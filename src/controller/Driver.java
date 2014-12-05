@@ -8,6 +8,7 @@ import lejos.nxt.LightSensor;
 import lejos.nxt.SensorPort;
 import lejos.nxt.Sound;
 import lejos.nxt.UltrasonicSensor;
+import lejos.nxt.comm.RConsole;
 import sensors.DistanceMonitor;
 import sensors.LightMonitor;
 import sensors.Timer;
@@ -17,6 +18,7 @@ public class Driver implements DistanceListener, LightListener, TouchListener, T
 
 	public static void main(String[] args)
 	{
+		RConsole.openBluetooth(0);
 		Driver d = new Driver();
 		d.start();
 	}
@@ -61,21 +63,24 @@ public class Driver implements DistanceListener, LightListener, TouchListener, T
 	}
 
 	@Override
-	public void thresholdPassed()
+	public void lineDetected()
 	{
+		RConsole.print("Line detected");
 		currentState = MotionMode.EVADING_LINE;
 		groundInteraction.evadeLine();
 	}
 
 	@Override
-	public void thresholdUnderpassed()
+	public void lineLost()
 	{
 		// TODO Auto-generated method stub
-		if (currentState != MotionMode.EVADING_LINE)
+		if (currentState == MotionMode.EVADING_LINE)
 		{
-			currentState = MotionMode.EVADING_LINE;
-			groundInteraction.evadeLine();
-			groundInteraction.moveForward();
+			currentState = MotionMode.SEARCHING;
+//			currentState = MotionMode.EVADING_LINE;
+//			groundInteraction.evadeLine();
+			groundInteraction.startSearch();
+			groundInteraction.searchSweeping();
 			new Timer(this, 500);
 		}
 	}

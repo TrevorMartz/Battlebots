@@ -50,25 +50,25 @@ public class LightMonitor
 
 	public void monitorLineDetector()
 	{
-		boolean isDetected = false;
+		boolean detected = false;
 		while (!Thread.interrupted())
 		{
 			RConsole.print(light.getLightValue() + "\n");
-			if (Math.abs(light.getLightValue()) > threshold && !isDetected)
+			if (Math.abs(light.getLightValue()) >= threshold && !detected)
 			{
 				for (LightListener listener : listeners)
 				{
-					listener.thresholdPassed();
+					listener.lineDetected();
 				}
-				isDetected = true;
+				detected = true;
 			}
-			if (Math.abs(light.getLightValue()) < threshold && isDetected)
+			if (Math.abs(light.getLightValue()) < threshold && detected)
 			{
 				for (LightListener listener : listeners)
 				{
-					listener.thresholdUnderpassed();
+					listener.lineLost();
 				}
-				isDetected = false;
+				detected = false;
 			}
 			Thread.yield();
 		}
