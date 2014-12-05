@@ -19,7 +19,7 @@ public class LightMonitor
 	public LightMonitor(LightSensor light)
 	{
 		this.light = light;
-		// light.calibrateLow();
+		this.light.calibrateLow();
 		this.threshold = 45;
 		monitor = new Thread(new Runnable()
 		{

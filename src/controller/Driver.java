@@ -86,7 +86,7 @@ public class Driver implements DistanceListener, LightListener, TouchListener, T
 		// TODO Auto-generated method stub
 		if (currentState != MotionMode.EVADING_LINE)
 		{
-			Sound.beepSequenceUp();
+//			Sound.beepSequenceUp();
 			currentState = MotionMode.PUSHING;
 			groundInteraction.moveForward();
 		}
