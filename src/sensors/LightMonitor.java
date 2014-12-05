@@ -1,66 +1,77 @@
 package sensors;
+
 import interfaces.LightListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import lejos.nxt.LightSensor;
-import lejos.nxt.SensorPort;
 import lejos.nxt.comm.RConsole;
 
+public class LightMonitor
+{
 
-public class LightMonitor {
-	
 	LightSensor light;
 	List<LightListener> listeners = new ArrayList<>();
 	private int threshold;
 	Thread monitor;
-	
-	public LightMonitor(LightSensor light){
+
+	public LightMonitor(LightSensor light)
+	{
 		this.light = light;
-		//light.calibrateLow();
+		// light.calibrateLow();
 		this.threshold = 45;
-		monitor = new Thread(new Runnable() {
-			
+		monitor = new Thread(new Runnable()
+		{
 			@Override
-			public void run() {
+			public void run()
+			{
 				monitorLineDetector();
 			}
 		});
-		
+
 		monitor.start();
 	}
-	
-	public void stop(){
+
+	public void stop()
+	{
 		monitor.interrupt();
 	}
-	
-	public void addListener(LightListener l){
+
+	public void addListener(LightListener l)
+	{
 		listeners.add(l);
 	}
-	
-	public void calibrate(){
+
+	public void calibrate()
+	{
 		light.calibrateLow();
 	}
 
-	public void monitorLineDetector(){
-    	boolean isDetected = false;
-    	while(!Thread.interrupted()){
-    		RConsole.print(light.getLightValue() + "\n");
-    		if(Math.abs(light.getLightValue()) > threshold && !isDetected){
-    			for(LightListener gl : listeners){
-    				gl.thresholdPassed();
-    			}
-    			isDetected = true;
-    		}
-    		if(Math.abs(light.getLightValue()) < threshold && isDetected){
-    			for(LightListener gl : listeners){
-    				gl.thresholdUnderpassed();
-    			}
-    			isDetected = false;
-    		}
-    		Thread.yield();
-    	}
-    }
-	
+	public void monitorLineDetector()
+	{
+		boolean isDetected = false;
+		while (!Thread.interrupted())
+		{
+//			RConsole.print(light.getLightValue() + "\n");
+			if (Math.abs(light.getLightValue()) > threshold && !isDetected)
+			{
+				for (LightListener listener : listeners)
+				{
+					listener.thresholdPassed();
+				}
+				isDetected = true;
+			}
+			if (Math.abs(light.getLightValue()) < threshold && isDetected)
+			{
+				for (LightListener listener : listeners)
+				{
+					listener.thresholdUnderpassed();
+				}
+				isDetected = false;
+			}
+			Thread.yield();
+		}
+	}
+
 }
