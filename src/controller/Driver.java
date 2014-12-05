@@ -5,16 +5,12 @@ import interfaces.LightListener;
 import interfaces.TimerListener;
 import interfaces.TouchListener;
 import lejos.nxt.LightSensor;
-import lejos.nxt.Motor;
-import lejos.nxt.NXTRegulatedMotor;
 import lejos.nxt.SensorPort;
 import lejos.nxt.Sound;
-import lejos.nxt.TouchSensor;
 import lejos.nxt.UltrasonicSensor;
 import sensors.DistanceMonitor;
 import sensors.LightMonitor;
 import sensors.Timer;
-import sensors.TouchMonitor;
 
 public class Driver implements DistanceListener, LightListener, TouchListener, TimerListener
 {
@@ -40,7 +36,7 @@ public class Driver implements DistanceListener, LightListener, TouchListener, T
 		groundInteraction = new GroundInteraction();
 		distanceMonitor = new DistanceMonitor(new UltrasonicSensor(SensorPort.S1), 40);
 		lightMonitor = new LightMonitor(new LightSensor(SensorPort.S2));
-
+		
 		distanceMonitor.addListener(this);
 		lightMonitor.addListener(this);
 	}
@@ -79,7 +75,7 @@ public class Driver implements DistanceListener, LightListener, TouchListener, T
 			currentState = MotionMode.EVADING_LINE;
 			groundInteraction.evadeLine();
 			groundInteraction.moveForward();
-			Timer t = new Timer(this, 500);
+			new Timer(this, 500);
 		}
 	}
 

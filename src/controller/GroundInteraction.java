@@ -1,23 +1,60 @@
 package controller;
 
+import interfaces.TimerListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import sensors.Timer;
 import lejos.nxt.Motor;
 import lejos.nxt.NXTRegulatedMotor;
 import lejos.nxt.comm.RConsole;
 
-public class GroundInteraction
+public class GroundInteraction implements TimerListener
 {
 
 	Thread movementFacilitator;
-	NXTRegulatedMotor left;
-	NXTRegulatedMotor right;
+	static NXTRegulatedMotor left;
+	static NXTRegulatedMotor right;
 	List<Instruction> path = new ArrayList<>();
 
 	private enum Direction
 	{
-		RIGHT, LEFT, FORWARD, BACKWARD
+		RIGHT, LEFT, FORWARD, BACKWARD;
+
+		public void move(int speed)
+		{
+			switch(this)
+			{
+				case BACKWARD:
+					right.setSpeed(speed);
+					left.setSpeed(speed);
+					right.forward();
+					left.forward();
+					break;
+				case FORWARD:
+					right.setSpeed(speed);
+					left.setSpeed(speed);
+					right.backward();
+					left.backward();
+					break;
+				case LEFT:
+					right.setSpeed(speed);
+					left.setSpeed(speed);
+					left.backward();
+					right.forward();
+					break;
+				case RIGHT:
+					right.setSpeed(speed);
+					left.setSpeed(speed);
+					left.forward();
+					right.backward();
+					break;
+				default:
+					break;
+				
+			}
+		}
 	}
 
 	private class Instruction
@@ -161,42 +198,15 @@ public class GroundInteraction
 
 	private void move()
 	{
-		RConsole.println("Starting the movement thread");
+//		RConsole.println("Starting the movement thread");
 		if (null != path)
 		{
 
 			for (int i = 0; i < path.size(); i++)
 			{
 				Instruction inst = path.get(i);
-				switch (inst.direction)
-				{
-				case BACKWARD:
-					right.setSpeed(inst.speed);
-					left.setSpeed(inst.speed);
-					right.forward();
-					left.forward();
-					break;
-				case FORWARD:
-					right.setSpeed(inst.speed);
-					left.setSpeed(inst.speed);
-					right.backward();
-					left.backward();
-					break;
-				case LEFT:
-					right.setSpeed(inst.speed);
-					left.setSpeed(inst.speed);
-					left.backward();
-					right.forward();
-					break;
-				case RIGHT:
-					right.setSpeed(inst.speed);
-					left.setSpeed(inst.speed);
-					left.forward();
-					right.backward();
-					break;
-				default:
-					break;
-				}
+				inst.direction.move(inst.speed);
+//				new Timer(this, (long) inst.time);
 				long start = System.currentTimeMillis();
 				while (System.currentTimeMillis() - start < inst.time)
 				{
@@ -210,12 +220,19 @@ public class GroundInteraction
 					}
 					if (Thread.interrupted())
 					{
-						RConsole.println("Movement thread is stopping.");
+//						RConsole.println("Movement thread is stopping.");
 						return;
 					}
 				}
 			}
 		}
+	}
+
+	@Override
+	public void onTimerFinish()
+	{
+		// TODO Auto-generated method stub
+		
 	}
 
 }

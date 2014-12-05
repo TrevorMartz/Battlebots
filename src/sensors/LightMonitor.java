@@ -53,7 +53,7 @@ public class LightMonitor
 		boolean isDetected = false;
 		while (!Thread.interrupted())
 		{
-//			RConsole.print(light.getLightValue() + "\n");
+			RConsole.print(light.getLightValue() + "\n");
 			if (Math.abs(light.getLightValue()) > threshold && !isDetected)
 			{
 				for (LightListener listener : listeners)
