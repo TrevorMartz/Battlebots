@@ -11,6 +11,7 @@ import lejos.nxt.UltrasonicSensor;
 import lejos.nxt.comm.RConsole;
 import sensors.DistanceMonitor;
 import sensors.LightMonitor;
+import sensors.Timer;
 import sensors.TouchMonitor;
 
 public class Driver implements DistanceListener, LightListener, TouchListener, TimerListener
@@ -18,7 +19,7 @@ public class Driver implements DistanceListener, LightListener, TouchListener, T
 
 	public static void main(String[] args)
 	{
-//		RConsole.openBluetooth(0);
+		// RConsole.openBluetooth(0);
 		Driver d = new Driver();
 		d.start();
 	}
@@ -39,16 +40,17 @@ public class Driver implements DistanceListener, LightListener, TouchListener, T
 		groundInteraction = new GroundInteraction();
 		distanceMonitor = new DistanceMonitor(new UltrasonicSensor(SensorPort.S1), 40);
 		distanceMonitor.addListener(this);
-		
+
 		lightMonitor = new LightMonitor(new LightSensor(SensorPort.S2));
 		lightMonitor.addListener(this);
-		
+
 		touchMonitors[0] = new TouchMonitor(new TouchSensor(SensorPort.S3));
 		touchMonitors[0].addListener(this);
-		
+
 		touchMonitors[1] = new TouchMonitor(new TouchSensor(SensorPort.S4));
 		touchMonitors[1].addListener(this);
-		
+		new Timer(this, 5000);
+
 	}
 
 	private void start()
@@ -59,12 +61,12 @@ public class Driver implements DistanceListener, LightListener, TouchListener, T
 	@Override
 	public void contactInitiated()
 	{
-		if(currentState == MotionMode.EVADING_LINE || currentState == MotionMode.RETREATING)
+		if (currentState == MotionMode.EVADING_LINE || currentState == MotionMode.RETREATING)
 		{
 			currentState = MotionMode.RETREATING;
 			groundInteraction.retreat();
 		}
-		else if(currentState == MotionMode.SEARCHING || currentState == MotionMode.PUSHING)
+		else if (currentState == MotionMode.SEARCHING || currentState == MotionMode.PUSHING)
 		{
 			currentState = MotionMode.EVADING_ATTACK;
 			groundInteraction.evadeAttackFrombehind();
@@ -80,11 +82,12 @@ public class Driver implements DistanceListener, LightListener, TouchListener, T
 	@Override
 	public void contactStopped()
 	{
-//		if(currentState == MotionMode.RETREATING || currentState == MotionMode.EVADING_ATTACK)
-//		{
-			currentState = MotionMode.SEARCHING;
-			groundInteraction.search();
-//		}
+		// if(currentState == MotionMode.RETREATING || currentState ==
+		// MotionMode.EVADING_ATTACK)
+		// {
+		currentState = MotionMode.SEARCHING;
+		groundInteraction.search();
+		// }
 
 	}
 
@@ -130,6 +133,11 @@ public class Driver implements DistanceListener, LightListener, TouchListener, T
 	@Override
 	public void onTimerFinish()
 	{
-//		currentState = MotionMode.SEARCHING;
+		if (currentState != MotionMode.EVADING_LINE)
+		{
+			currentState = MotionMode.SEARCHING;
+			groundInteraction.search();
+		}
+		new Timer(this, 5000);
 	}
 }
