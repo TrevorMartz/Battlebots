@@ -8,7 +8,6 @@ import lejos.nxt.LightSensor;
 import lejos.nxt.SensorPort;
 import lejos.nxt.TouchSensor;
 import lejos.nxt.UltrasonicSensor;
-import lejos.nxt.comm.RConsole;
 import sensors.DistanceMonitor;
 import sensors.LightMonitor;
 import sensors.TouchMonitor;
@@ -53,7 +52,8 @@ public class Driver implements DistanceListener, LightListener, TouchListener, T
 
 	private void start()
 	{
-		groundInteraction.moveForward();
+		currentState = MotionMode.SEARCHING;
+		groundInteraction.search();
 	}
 
 	@Override
@@ -130,11 +130,5 @@ public class Driver implements DistanceListener, LightListener, TouchListener, T
 	@Override
 	public void onTimerFinish()
 	{
-		if (currentState != MotionMode.EVADING_LINE)
-		{
-			currentState = MotionMode.SEARCHING;
-			groundInteraction.search();
-		}
-		new Timer(this, 5000);
 	}
 }
