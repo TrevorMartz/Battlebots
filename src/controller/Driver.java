@@ -69,17 +69,22 @@ public class Driver implements DistanceListener, LightListener, TouchListener, T
 			currentState = MotionMode.EVADING_ATTACK;
 			groundInteraction.evadeAttackFrombehind();
 		}
+		else
+		{
+			currentState = MotionMode.SEARCHING;
+			groundInteraction.search();
+		}
 
 	}
 
 	@Override
 	public void contactStopped()
 	{
-		if(currentState == MotionMode.RETREATING || currentState == MotionMode.EVADING_ATTACK)
-		{
+//		if(currentState == MotionMode.RETREATING || currentState == MotionMode.EVADING_ATTACK)
+//		{
 			currentState = MotionMode.SEARCHING;
 			groundInteraction.search();
-		}
+//		}
 
 	}
 
