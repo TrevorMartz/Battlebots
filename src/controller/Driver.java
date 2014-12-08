@@ -18,7 +18,7 @@ public class Driver implements DistanceListener, LightListener, TouchListener, T
 
 	public static void main(String[] args)
 	{
-		RConsole.openBluetooth(0);
+//		RConsole.openBluetooth(0);
 		Driver d = new Driver();
 		d.start();
 	}
