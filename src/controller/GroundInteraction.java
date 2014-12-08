@@ -167,6 +167,13 @@ public class GroundInteraction implements TimerListener
 		path.add(new Instruction(Direction.FORWARD, 3000, 800));
 		movementFacilitator.start();
 	}
+	
+	public void evadeAttackFrombehind()
+	{
+		stop();
+		path.add(new Instruction(Direction.BACKWARD, 1000, (int) left.getMaxSpeed()));
+		path.add(new Instruction(Direction.RIGHT, 1000, (int) left.getMaxSpeed()));
+	}
 
 	private void move()
 	{
