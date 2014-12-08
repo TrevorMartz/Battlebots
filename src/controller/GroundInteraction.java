@@ -133,6 +133,7 @@ public class GroundInteraction implements TimerListener
 	{
 		stop();
 		path.add(new Instruction(Direction.FORWARD, 5000, (int) left.getMaxSpeed()));
+		movementFacilitator.start();
 	}
 	
 	public void search()
@@ -173,6 +174,7 @@ public class GroundInteraction implements TimerListener
 		stop();
 		path.add(new Instruction(Direction.BACKWARD, 1000, (int) left.getMaxSpeed()));
 		path.add(new Instruction(Direction.RIGHT, 1000, (int) left.getMaxSpeed()));
+		movementFacilitator.start();
 	}
 
 	private void move()

@@ -6,14 +6,11 @@ import interfaces.TimerListener;
 import interfaces.TouchListener;
 import lejos.nxt.LightSensor;
 import lejos.nxt.SensorPort;
-import lejos.nxt.Sound;
 import lejos.nxt.TouchSensor;
 import lejos.nxt.UltrasonicSensor;
 import lejos.nxt.comm.RConsole;
-import lejos.robotics.Touch;
 import sensors.DistanceMonitor;
 import sensors.LightMonitor;
-import sensors.Timer;
 import sensors.TouchMonitor;
 
 public class Driver implements DistanceListener, LightListener, TouchListener, TimerListener
@@ -28,7 +25,7 @@ public class Driver implements DistanceListener, LightListener, TouchListener, T
 
 	public enum MotionMode
 	{
-		SEARCHING, EVADING_LINE, PUSHING, RETREATING, INTERCEPTING, EVADING_ATTACK
+		SEARCHING, EVADING_LINE, PUSHING, RETREATING, EVADING_ATTACK
 	}
 
 	private MotionMode currentState = MotionMode.SEARCHING;
@@ -114,6 +111,7 @@ public class Driver implements DistanceListener, LightListener, TouchListener, T
 		else
 		{
 			currentState = MotionMode.PUSHING;
+			groundInteraction.push();
 		}
 	}
 
